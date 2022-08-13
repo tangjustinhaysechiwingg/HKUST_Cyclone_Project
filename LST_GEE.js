@@ -14,13 +14,11 @@ function maskL8sr(col) {
   return col.updateMask(mask);
 }
 
-
 // Wrong boundary in Hong Kong (without Tsing Yi and Islands)
 //var HKBorder = dataset.filter(ee.Filter.eq('country_na', 'Hong Kong'));
 //print(HKBorder);
 //Map.centerObject(HKBorder, 6);
 //Map.addLayer(HKBorder);
-
 
 // Parameter Setting 
 var vizParams = {
