@@ -47,11 +47,11 @@ gamma: 1.4,
 // Choosing the Summer Period in Hong Kong within 9 years 
 var dataset_2022 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .map(maskL8sr)
-    .filterDate('2022-06-01', '2022-07-30')
+    .filterDate('2022-05-20', '2022-07-30')
     .filterBounds(geometry);
 var dataset_2021 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .map(maskL8sr)
-    .filterDate('2021-05-20', '2021-08-30')
+    .filterDate('2021-05-20', '2021-09-30')
     .filterBounds(geometry);
 var dataset_2020 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .map(maskL8sr)
