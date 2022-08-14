@@ -1,6 +1,27 @@
 // Land Surface Temperature Mapping on Google Earth Engine
 // Written by Tang Justin Hayse Chi Wing G. 
 
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var imageCollection = ee.ImageCollection("LANDSAT/LC08/C01/T1_SR"),
+    imageCollection2 = ee.ImageCollection("LANDSAT/LC08/C01/T1"),
+    table = ee.FeatureCollection("USDOS/LSIB/2017"),
+    dataset = ee.FeatureCollection("USDOS/LSIB/2017"),
+    geometry = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[113.83391933092445, 22.56628269776618],
+          [113.83391933092445, 22.15352196839234],
+          [114.45876674303382, 22.15352196839234],
+          [114.45876674303382, 22.56628269776618]]], null, false),
+    vizParams2 = {"bands":["B4","B3","B2"],"min":0,"max":3000,"gamma":1.4};
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 // Cloud mask
 function maskL8sr(col) {
   // Bits 3 and 5 are cloud shadow and cloud, respectively.
@@ -14,11 +35,13 @@ function maskL8sr(col) {
   return col.updateMask(mask);
 }
 
+
 // Wrong boundary in Hong Kong (without Tsing Yi and Islands)
 //var HKBorder = dataset.filter(ee.Filter.eq('country_na', 'Hong Kong'));
 //print(HKBorder);
 //Map.centerObject(HKBorder, 6);
 //Map.addLayer(HKBorder);
+
 
 // Parameter Setting 
 var vizParams = {
@@ -51,7 +74,7 @@ var dataset_2022 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .filterBounds(geometry);
 var dataset_2021 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .map(maskL8sr)
-    .filterDate('2021-05-20', '2021-09-30')
+    .filterDate('2021-05-20', '2021-08-30')
     .filterBounds(geometry);
 var dataset_2020 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .map(maskL8sr)
