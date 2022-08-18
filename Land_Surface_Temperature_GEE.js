@@ -67,6 +67,7 @@ gamma: 1.4,
 //}
 //print(col, 'coleccion');
 
+
 // Choosing the Summer Period in Hong Kong within 9 years 
 var dataset_2022 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .map(maskL8sr)
@@ -74,7 +75,7 @@ var dataset_2022 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .filterBounds(geometry);
 var dataset_2021 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .map(maskL8sr)
-    .filterDate('2021-05-20', '2021-08-30')
+    .filterDate('2021-05-20', '2021-09-30')
     .filterBounds(geometry);
 var dataset_2020 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
     .map(maskL8sr)
@@ -136,7 +137,7 @@ print(ndvi,'ndvi');
 Map.addLayer(ndvi, ndviParams, 'ndvi');
 }
 
-//select thermal band 10(with brightness tempereature), no calculation 
+//BT 
 var thermal= image.select('B10').multiply(0.1);
 var b10Params = {min: 291.918, max: 302.382, palette: ['blue', 'white', 'green']};
 Map.addLayer(thermal, b10Params, 'thermal');
@@ -160,21 +161,29 @@ maxPixels: 1e9
 print(max, 'max')
 }
 
-// Fractional Vegetation
+// NDBI Computation
+{
+var ndbi = image.normalizedDifference(['B6', 'B5']).rename('NDBI');
+var ndbiParams = {min: -1, max: 1, palette: ['black','white','yellow']};
+print(ndbi,'ndbi');
+Map.addLayer(ndbi, ndbiParams, 'ndbi');
+}
+
+// Fractional Vegetation Cover (FVC)
 {
 var fv =(ndvi.subtract(min).divide(max.subtract(min))).pow(ee.Number(2)).rename('FV'); 
 print(fv, 'fv');
 Map.addLayer(fv);
 }
 
-// Emissivity
+// Emissivity (e)
 var a= ee.Number(0.004);
 var b= ee.Number(0.986);
 var EM = fv.multiply(a).add(b).rename('EMM');
 var imageVisParam3 = {min: 0.9865619146722164, max:0.989699971371314};
 Map.addLayer(EM, imageVisParam3,'EMM');
 
-//Land Surface Temperature in Celsius Degree
+// Land Surface Temperature (LST) in Celsius Degree
 var LST = thermal.expression(
 '(Tb / (1 + (0.00115 * (Tb / 1.438)) * log(Ep)))-273.15', 
 {
