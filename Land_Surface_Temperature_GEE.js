@@ -1,5 +1,4 @@
 // Land Surface Temperature Mapping on Google Earth Engine
-// Written by Tang Justin Hayse Chi Wing G. 
 
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageCollection = ee.ImageCollection("LANDSAT/LC08/C01/T1_SR"),
