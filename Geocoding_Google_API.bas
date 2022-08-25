@@ -1,3 +1,5 @@
+'Alternative way
+
 Option Explicit
 Public Function GetCoordinates(address As String) As String
     'Declaring the necessary variables.
