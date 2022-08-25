@@ -1,4 +1,4 @@
-'Alternative way
+'Alternative way conducted on Excel
 
 Option Explicit
 Public Function GetCoordinates(address As String) As String
