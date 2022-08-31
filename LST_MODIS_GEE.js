@@ -52,10 +52,10 @@ Map.addLayer(collectionAqua.first().select('LST'), TsVisParams, 'Aqua LST', 0);
 
 //print date of image displayed to console
 var date = collectionAqua.first().get('system:time_start');
-print('Date of Aqua Map Displayed:', ee.Date(date));
+print('Date of Map Displayed:', ee.Date(date));
 
 var date = collectionTerra.first().get('system:time_start');
-print('Date of Terra Map Displayed:', ee.Date(date));
+print('Date of Map Displayed:', ee.Date(date));
 
 //Image of mean LST calculated over the image collection
 var mean_Aqua_LST = collectionAqua.mean().select('LST');
